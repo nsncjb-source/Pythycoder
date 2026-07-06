@@ -6,6 +6,7 @@
 <title>Pythycoder — Master Coding with Cody</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
 <style>
   :root{
     --jungle-deep:    #142E1D;
@@ -76,6 +77,35 @@
     color:#cfe8c9; transition:color .15s;
   }
   .nav-links a:hover{ color:var(--moss-bright); }
+
+  .nav-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .upgrade-btn {
+    background: var(--moss-bright);
+    color: var(--ink);
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .upgrade-btn:hover {
+    background: #8fb03f;
+    transform: translateY(-1px);
+  }
+
+  .account-status {
+    font-size: 0.85rem;
+    color: #a9c7a3;
+  }
 
   /* ---------- MAIN LAYOUT ---------- */
   .main-container {
@@ -435,6 +465,212 @@
     border-color: var(--moss-bright);
   }
 
+  .challenge-btn.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .challenge-btn.locked::after {
+    content: " 🔒";
+  }
+
+  /* MODAL STYLES */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-backdrop.open {
+    display: flex;
+  }
+
+  .modal {
+    background: var(--parchment);
+    border-radius: 12px;
+    padding: 32px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .modal h2 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    color: var(--jungle-deep);
+  }
+
+  .modal p {
+    color: var(--jungle-mid);
+    margin: 12px 0;
+    font-size: 0.95rem;
+  }
+
+  .pricing-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .plan-card {
+    border: 2px solid var(--jungle-deep);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .plan-card:hover {
+    background: rgba(124, 154, 58, 0.1);
+  }
+
+  .plan-card.selected {
+    background: var(--moss-bright);
+    color: var(--ink);
+  }
+
+  .plan-card h3 {
+    font-size: 1.2rem;
+    margin: 8px 0;
+  }
+
+  .plan-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--moss-bright);
+    margin: 8px 0;
+  }
+
+  .plan-card.selected .plan-price {
+    color: var(--ink);
+  }
+
+  .plan-features {
+    font-size: 0.8rem;
+    margin-top: 8px;
+    text-align: left;
+  }
+
+  .plan-features li {
+    margin: 4px 0;
+  }
+
+  .checkout-form {
+    margin: 20px 0;
+    padding: 16px;
+    background: var(--parchment-dim);
+    border-radius: 8px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--jungle-deep);
+    font-size: 0.9rem;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--jungle-mid);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  #card-element {
+    padding: 12px;
+    border: 1px solid var(--jungle-mid);
+    border-radius: 6px;
+    background: white;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .modal-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-cancel {
+    background: #e0e0e0;
+    color: var(--ink);
+  }
+
+  .btn-cancel:hover {
+    background: #d0d0d0;
+  }
+
+  .btn-pay {
+    background: var(--moss-bright);
+    color: var(--ink);
+  }
+
+  .btn-pay:hover {
+    background: #8fb03f;
+  }
+
+  .btn-pay:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .error-message {
+    color: #e0654c;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    display: none;
+  }
+
+  .success-message {
+    color: var(--moss-bright);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    display: none;
+    padding: 16px;
+  }
+
+  .spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(124, 154, 58, 0.2);
+    border-top-color: var(--moss-bright);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
   /* RESPONSIVE */
   @media (max-width: 1024px) {
     .main-container {
@@ -451,6 +687,10 @@
 
     .cody-section {
       min-height: 50vh;
+    }
+
+    .pricing-options {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -475,8 +715,11 @@
     <nav class="nav-links">
       <a href="javascript:void(0)">Documentation</a>
       <a href="javascript:void(0)">About</a>
-      <a href="javascript:void(0)">Contact</a>
     </nav>
+    <div class="nav-right">
+      <div class="account-status" id="account-status">Free Plan</div>
+      <button class="upgrade-btn" onclick="openPaymentModal()">Upgrade →</button>
+    </div>
   </div>
 </header>
 
@@ -538,18 +781,77 @@
       <div class="challenge-label">Select Challenge</div>
       <div class="challenge-buttons">
         <button class="challenge-btn active" onclick="loadChallenge(1)">Challenge 1: FizzBuzz</button>
-        <button class="challenge-btn" onclick="loadChallenge(2)">Challenge 2: Even/Odd</button>
-        <button class="challenge-btn" onclick="loadChallenge(3)">Challenge 3: Sum Numbers</button>
+        <button class="challenge-btn" id="ch2-btn" onclick="loadChallenge(2)">Challenge 2: Even/Odd</button>
+        <button class="challenge-btn" id="ch3-btn" onclick="loadChallenge(3)">Challenge 3: Sum Numbers</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- PAYMENT MODAL -->
+<div class="modal-backdrop" id="payment-modal">
+  <div class="modal">
+    <h2>Upgrade to Premium</h2>
+    <p>Unlock all challenges and advanced features</p>
+
+    <div class="pricing-options">
+      <div class="plan-card" onclick="selectPlan('starter', 9.99)">
+        <h3>Starter</h3>
+        <div class="plan-price">$9.99</div>
+        <ul class="plan-features">
+          <li>✓ All 10 challenges</li>
+          <li>✓ Cody AI coach</li>
+          <li>✓ 1 month access</li>
+        </ul>
+      </div>
+
+      <div class="plan-card" onclick="selectPlan('pro', 19.99)">
+        <h3>Pro</h3>
+        <div class="plan-price">$19.99</div>
+        <ul class="plan-features">
+          <li>✓ All 50+ challenges</li>
+          <li>✓ Advanced Cody</li>
+          <li>✓ 12 months access</li>
+        </ul>
+      </div>
+    </div>
+
+    <form id="checkout-form" class="checkout-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>Card Details</label>
+        <div id="card-element"></div>
+      </div>
+
+      <div class="error-message" id="error-message"></div>
+      <div class="success-message" id="success-message">✓ Payment successful! Welcome to Premium.</div>
+    </form>
+
+    <div class="modal-actions">
+      <button class="modal-btn btn-cancel" onclick="closePaymentModal()">Cancel</button>
+      <button class="modal-btn btn-pay" id="pay-btn" onclick="processPayment()" disabled>
+        <span class="spinner" id="spinner"></span>
+        <span id="pay-text">Pay</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <footer>
-  <p>© 2024 Pythycoder. Learn coding with AI guidance. Code responsibly.</p>
+  <p>© 2024 Pythycoder. Learn coding with AI guidance. All challenges included with Premium.</p>
 </footer>
 
 <script>
+  // Initialize Stripe
+  const stripe = Stripe('pk_test_51234567890abcdefghijklmnop'); // Test key
+  const elements = stripe.elements();
+  const cardElement = elements.create('card');
+  cardElement.mount('#card-element');
+
   // CHALLENGES DATA
   const challenges = {
     1: {
@@ -585,7 +887,8 @@ def check_even_odd(num):
 print(check_even_odd(4))
 print(check_even_odd(7))`,
       hint: 'A number is even if num % 2 == 0. Otherwise, it\'s odd. Use an if/else statement.',
-      solution_check: (code) => code.includes('def check_even_odd') && code.includes('if') && code.includes('%')
+      solution_check: (code) => code.includes('def check_even_odd') && code.includes('if') && code.includes('%'),
+      premium: true
     },
     3: {
       name: 'Sum Numbers',
@@ -601,25 +904,60 @@ def sum_numbers(n):
 print(sum_numbers(5))  # Should print 15
 print(sum_numbers(10)) # Should print 55`,
       hint: 'You can use a loop to add numbers together, or use the formula: sum = n * (n + 1) / 2',
-      solution_check: (code) => code.includes('def sum_numbers')
+      solution_check: (code) => code.includes('def sum_numbers'),
+      premium: true
     }
   };
 
   let currentChallenge = 1;
   let playerXP = 0;
+  let isPremium = false;
+  let selectedPlan = null;
+  let selectedPrice = 0;
+
+  // UPDATE UI BASED ON PREMIUM STATUS
+  function updatePremiumUI() {
+    const ch2 = document.getElementById('ch2-btn');
+    const ch3 = document.getElementById('ch3-btn');
+    const status = document.getElementById('account-status');
+
+    if (isPremium) {
+      ch2.classList.remove('locked');
+      ch3.classList.remove('locked');
+      status.textContent = '✓ Premium Plan';
+      status.style.color = 'var(--moss-bright)';
+    } else {
+      ch2.classList.add('locked');
+      ch3.classList.add('locked');
+      status.textContent = 'Free Plan';
+      status.style.color = '#a9c7a3';
+    }
+  }
 
   // LOAD CHALLENGE
   function loadChallenge(id) {
-    currentChallenge = id;
     const challenge = challenges[id];
+
+    if (challenge.premium && !isPremium) {
+      addCodyMessage('<strong>Cody:</strong> This challenge is part of Premium! Upgrade to unlock it.', 'cody');
+      openPaymentModal();
+      return;
+    }
+
+    currentChallenge = id;
     
     document.getElementById('code-editor').value = challenge.starter;
     document.getElementById('filename').textContent = challenge.filename;
     document.getElementById('output-console').innerHTML = '';
 
     // Update button styles
-    document.querySelectorAll('.challenge-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    document.querySelectorAll('.challenge-btn').forEach(btn => {
+      if (!btn.classList.contains('locked')) btn.classList.remove('active');
+    });
+    if (!challenges[id].premium || isPremium) {
+      document.querySelectorAll('.challenge-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
 
     // Clear chat
     const chatBox = document.getElementById('cody-chat');
@@ -634,14 +972,12 @@ print(sum_numbers(10)) # Should print 55`,
 
     outputBox.innerHTML = '<span class="output-success">Running code...</span>';
 
-    // Simple simulation of code execution
     setTimeout(() => {
       if (code.trim() === '') {
         outputBox.innerHTML = '<span class="output-error">Error: No code to run!</span>';
         return;
       }
 
-      // Check if solution looks reasonable
       if (challenge.solution_check(code)) {
         playerXP += 50;
         document.getElementById('xp-counter').textContent = playerXP;
@@ -691,7 +1027,6 @@ print(sum_numbers(10)) # Should print 55`,
     addCodyMessage('You: ' + message, 'user');
     input.value = '';
 
-    // Simulate Cody's response
     const responses = [
       "Great question! Let me help you think through this. What part are you working on right now?",
       "That's a smart observation! Try experimenting with that idea in your code and see what happens.",
@@ -715,8 +1050,97 @@ print(sum_numbers(10)) # Should print 55`,
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 
-  // Initialize with first challenge
+  // PAYMENT FUNCTIONS
+  function openPaymentModal() {
+    document.getElementById('payment-modal').classList.add('open');
+  }
+
+  function closePaymentModal() {
+    document.getElementById('payment-modal').classList.remove('open');
+    document.getElementById('error-message').style.display = 'none';
+    document.getElementById('success-message').style.display = 'none';
+  }
+
+  function selectPlan(plan, price) {
+    selectedPlan = plan;
+    selectedPrice = price;
+
+    document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('selected'));
+    event.target.closest('.plan-card').classList.add('selected');
+
+    document.getElementById('pay-btn').disabled = false;
+    document.getElementById('pay-text').textContent = `Pay $${price.toFixed(2)}`;
+  }
+
+  async function processPayment() {
+    if (!selectedPlan) {
+      alert('Please select a plan');
+      return;
+    }
+
+    const email = document.getElementById('email').value;
+    if (!email) {
+      alert('Please enter your email');
+      return;
+    }
+
+    const payBtn = document.getElementById('pay-btn');
+    const spinner = document.getElementById('spinner');
+    const payText = document.getElementById('pay-text');
+    const errorMsg = document.getElementById('error-message');
+
+    payBtn.disabled = true;
+    spinner.style.display = 'inline-block';
+    payText.textContent = 'Processing...';
+    errorMsg.style.display = 'none';
+
+    try {
+      // Create payment token with Stripe
+      const { token, error } = await stripe.createToken(cardElement, { email });
+
+      if (error) {
+        throw error;
+      }
+
+      // Simulate successful payment
+      setTimeout(() => {
+        isPremium = true;
+        updatePremiumUI();
+        spinner.style.display = 'none';
+        payText.textContent = 'Success! ✓';
+        document.getElementById('success-message').style.display = 'block';
+
+        setTimeout(() => {
+          closePaymentModal();
+          payBtn.disabled = true;
+          payText.textContent = `Pay $${selectedPrice.toFixed(2)}`;
+          addCodyMessage(`<strong>Cody:</strong> Awesome! Welcome to the Premium tier! You now have access to all ${selectedPlan === 'pro' ? '50+' : '10'} challenges. Let's unlock your potential!`, 'cody');
+        }, 2000);
+      }, 1500);
+
+    } catch (error) {
+      spinner.style.display = 'none';
+      payText.textContent = `Pay $${selectedPrice.toFixed(2)}`;
+      payBtn.disabled = false;
+      errorMsg.textContent = 'Payment failed: ' + error.message;
+      errorMsg.style.display = 'block';
+    }
+  }
+
+  // Handle Stripe card changes
+  cardElement.addEventListener('change', (event) => {
+    const displayError = document.getElementById('error-message');
+    if (event.error) {
+      displayError.textContent = event.error.message;
+      displayError.style.display = 'block';
+    } else {
+      displayError.style.display = 'none';
+    }
+  });
+
+  // Initialize
   loadChallenge(1);
+  updatePremiumUI();
 </script>
 
 </body>
