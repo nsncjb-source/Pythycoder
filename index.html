@@ -358,30 +358,31 @@
     font-size: 0.75rem;
   }
 
-  .cody-suggestions {
+  .typing-indicator {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 4px;
+    padding: 12px;
   }
 
-  .suggestion-btn {
-    background: #112617;
-    border: 1px solid #1c3322;
-    border-radius: 6px;
-    color: #a9c7a3;
-    padding: 10px;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
-    text-align: left;
-    transition: all 0.15s;
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #a9c7a3;
+    animation: typing 1.4s infinite;
   }
 
-  .suggestion-btn:hover {
-    background: #1a3523;
-    color: var(--moss-bright);
-    border-color: var(--moss-bright);
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes typing {
+    0%, 60%, 100% { opacity: 0.5; }
+    30% { opacity: 1; }
   }
 
   .cody-input-area {
@@ -406,6 +407,11 @@
     color: #4e6756;
   }
 
+  .cody-input-area input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
   .cody-send-btn {
     background: var(--moss-bright);
     color: var(--ink);
@@ -418,9 +424,14 @@
     transition: all 0.15s;
   }
 
-  .cody-send-btn:hover {
+  .cody-send-btn:hover:not(:disabled) {
     background: #8fb03f;
     transform: translateY(-1px);
+  }
+
+  .cody-send-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   /* CHALLENGE SELECTOR */
@@ -769,19 +780,13 @@
     <div class="cody-content">
       <div class="cody-chat" id="cody-chat">
         <div class="chat-bubble cody">
-          <strong>Cody:</strong> Hey! I'm your coding coach. I won't write code for you, but I'll help you understand how to solve each challenge. Ask me questions!
+          <strong>Cody:</strong> Hey! I'm your AI coding coach. Ask me anything about this challenge and I'll help you learn how to solve it. I won't write code for you, but I'll guide you through the logic!
         </div>
       </div>
 
-      <div class="cody-suggestions">
-        <button class="suggestion-btn" onclick="askCody('challenge')">❓ About this?</button>
-        <button class="suggestion-btn" onclick="askCody('stuck')">🤔 I'm stuck</button>
-        <button class="suggestion-btn" onclick="askCody('concept')">💡 Explain</button>
-      </div>
-
       <div class="cody-input-area">
-        <input type="text" id="cody-input" placeholder="Ask Cody..." onkeypress="if(event.key === 'Enter') sendToCody()">
-        <button class="cody-send-btn" onclick="sendToCody()">→</button>
+        <input type="text" id="cody-input" placeholder="Ask Cody anything..." onkeypress="if(event.key === 'Enter') sendToCody()">
+        <button class="cody-send-btn" id="cody-send-btn" onclick="sendToCody()">→</button>
       </div>
     </div>
 
@@ -850,7 +855,7 @@
 </div>
 
 <footer>
-  <p>© 2024 Pythycoder. Learn with AI guidance.</p>
+  <p>© 2024 Pythycoder. Learn with real AI guidance.</p>
 </footer>
 
 <script>
@@ -922,6 +927,7 @@ print(sum_numbers(10)) # Should print 55`,
   let isPremium = false;
   let selectedPlan = null;
   let selectedPrice = 0;
+  let codyApiKey = 'sk_test_demo'; // Placeholder - replace with your actual API key
 
   // UPDATE UI BASED ON PREMIUM STATUS
   function updatePremiumUI() {
@@ -969,7 +975,9 @@ print(sum_numbers(10)) # Should print 55`,
 
     // Clear chat
     const chatBox = document.getElementById('cody-chat');
-    chatBox.innerHTML = `<div class="chat-bubble cody"><strong>Cody:</strong> Let's tackle Challenge ${id}: ${challenge.name}! ${challenge.hint}</div>`;
+    chatBox.innerHTML = `<div class="chat-bubble cody"><strong>Cody:</strong> Let's tackle Challenge ${id}: ${challenge.name}! 
+    
+${challenge.hint}</div>`;
   }
 
   // RUN CODE
@@ -1012,41 +1020,90 @@ print(sum_numbers(10)) # Should print 55`,
     document.getElementById('output-console').innerHTML = '';
   }
 
-  // CODY RESPONSES
-  const codyResponses = {
-    challenge: "This challenge is about solving a specific programming problem. Read the instructions carefully, start with the function signature, and build your logic step by step. Don't try to solve it all at once!",
-    stuck: "Take a deep breath! Break your problem into smaller parts. What's the first step? Try writing that first, then test it. If you're still stuck, ask me about a specific part.",
-    concept: "Every challenge teaches you a programming concept. Look at the hints I give you—they point to the key concept you need. Try to understand WHY the concept works."
-  };
-
-  function askCody(type) {
-    addCodyMessage('You: ' + Object.keys(codyResponses)[Object.keys(codyResponses).indexOf(type)], 'user');
-    setTimeout(() => {
-      addCodyMessage('<strong>Cody:</strong> ' + codyResponses[type], 'cody');
-    }, 300);
-  }
-
-  function sendToCody() {
+  // SEND MESSAGE TO CODY AI
+  async function sendToCody() {
     const input = document.getElementById('cody-input');
     const message = input.value.trim();
 
     if (!message) return;
 
+    // Disable input while processing
+    input.disabled = true;
+    document.getElementById('cody-send-btn').disabled = true;
+
+    // Add user message
     addCodyMessage('You: ' + message, 'user');
     input.value = '';
 
-    const responses = [
-      "Great question! What part are you working on right now?",
-      "That's a smart observation! Try experimenting with that idea.",
-      "You're on the right track! Break it into smaller steps.",
-      "Have you considered using a loop or conditional?",
-      "Don't give up! Try different solutions and see what works."
-    ];
+    // Show typing indicator
+    const chatBox = document.getElementById('cody-chat');
+    const typingBubble = document.createElement('div');
+    typingBubble.className = 'typing-indicator';
+    typingBubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    chatBox.appendChild(typingBubble);
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-    setTimeout(() => {
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      addCodyMessage('<strong>Cody:</strong> ' + randomResponse, 'cody');
-    }, 400);
+    try {
+      // Call Groq API (free LLM alternative to Claude)
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${codyApiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'mixtral-8x7b-32768',
+          messages: [
+            {
+              role: 'system',
+              content: `You are Cody, an expert Python programming coach. Your role is to:
+1. Help students understand programming concepts
+2. Guide them through problem-solving without writing the complete solution
+3. Ask clarifying questions to help them think through the problem
+4. Provide hints about methods and approaches they should use
+5. Explain why certain approaches work better than others
+6. Keep responses concise and focused (2-3 sentences max)
+7. Be encouraging and supportive
+
+Current Challenge: ${challenges[currentChallenge].name}
+${challenges[currentChallenge].hint}
+
+Remember: NEVER write complete code solutions. Always guide, never code for them.`
+            },
+            {
+              role: 'user',
+              content: message
+            }
+          ],
+          temperature: 0.7,
+          max_tokens: 150
+        })
+      });
+
+      // Remove typing indicator
+      typingBubble.remove();
+
+      if (!response.ok) {
+        // Fallback response if API fails
+        addCodyMessage('<strong>Cody:</strong> Great question! Let me help you think through this. What part of the problem are you stuck on? Try breaking it down into smaller steps.', 'cody');
+      } else {
+        const data = await response.json();
+        const codyResponse = data.choices[0].message.content;
+        addCodyMessage('<strong>Cody:</strong> ' + codyResponse, 'cody');
+      }
+    } catch (error) {
+      // Remove typing indicator
+      typingBubble.remove();
+      
+      // Fallback response
+      console.error('API Error:', error);
+      addCodyMessage('<strong>Cody:</strong> Let me help you think about this problem. What approach are you considering? Think about what tools you might need from Python.', 'cody');
+    }
+
+    // Re-enable input
+    input.disabled = false;
+    document.getElementById('cody-send-btn').disabled = false;
+    input.focus();
   }
 
   function addCodyMessage(msg, type) {
