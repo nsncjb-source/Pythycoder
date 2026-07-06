@@ -55,10 +55,11 @@
     background:rgba(15, 31, 20, 0.95);
     backdrop-filter:blur(6px);
     border-bottom:1px solid #1c3322;
+    padding: 0;
   }
   .nav{
     display:flex; align-items:center; justify-content:space-between;
-    padding:18px 32px; max-width:100%; margin:0 auto;
+    padding:16px 24px; max-width:100%; margin:0 auto;
   }
   .brand{
     display:flex; align-items:center; gap:8px;
@@ -110,22 +111,22 @@
   /* ---------- MAIN LAYOUT ---------- */
   .main-container {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 350px;
     height: calc(100vh - 60px);
     gap: 0;
   }
 
-  /* LEFT: CODE EDITOR SECTION */
+  /* LEFT: CODE EDITOR SECTION - MASSIVE */
   .editor-section {
     display: flex;
     flex-direction: column;
     background: var(--code-bg);
-    border-right: 1px solid #1c3322;
+    border-right: 2px solid #1c3322;
     overflow: hidden;
   }
 
   .editor-header {
-    padding: 16px;
+    padding: 20px 24px;
     background: #0C1911;
     border-bottom: 1px solid #1c3322;
     display: flex;
@@ -136,11 +137,11 @@
   .editor-header-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
   }
 
   .editor-filename {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #cfe8c9;
     font-family: 'JetBrains Mono', monospace;
     font-weight: 600;
@@ -150,24 +151,24 @@
     background: #1a3523; 
     color: var(--moss-bright); 
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem; 
-    padding: 6px 12px; 
+    font-size: 0.9rem; 
+    padding: 8px 14px; 
     border-radius: 6px; 
     border: 1px solid #24422f;
   }
 
   .editor-controls {
     display: flex;
-    gap: 8px;
+    gap: 10px;
   }
 
   .btn-run {
     background: var(--moss-bright);
     color: var(--ink);
-    padding: 8px 16px;
+    padding: 10px 20px;
     border-radius: 6px;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     border: none;
     cursor: pointer;
     transition: all 0.15s;
@@ -181,10 +182,10 @@
   .btn-reset {
     background: #1a3523;
     color: #cfe8c9;
-    padding: 8px 16px;
+    padding: 10px 20px;
     border-radius: 6px;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     border: 1px solid #24422f;
     cursor: pointer;
     transition: all 0.15s;
@@ -198,15 +199,16 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 20px;
     overflow: hidden;
+    gap: 16px;
   }
 
   .code-editor-container {
-    flex: 1;
+    flex: 0.7;
     position: relative;
-    border: 1px solid #1c3322;
-    border-radius: 8px;
+    border: 2px solid #1c3322;
+    border-radius: 10px;
     overflow: hidden;
     background: #07100a;
   }
@@ -219,10 +221,10 @@
     outline: none;
     color: #cfe8c9;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.95rem;
-    padding: 16px;
+    font-size: 1.1rem;
+    padding: 20px;
     resize: none;
-    line-height: 1.6;
+    line-height: 1.7;
     tab-size: 2;
   }
 
@@ -231,29 +233,29 @@
   }
 
   .output-section {
-    margin-top: 12px;
     background: #0C1911;
-    border: 1px solid #1c3322;
-    border-radius: 8px;
-    padding: 12px;
-    max-height: 200px;
+    border: 2px solid #1c3322;
+    border-radius: 10px;
+    padding: 16px;
+    flex: 0.3;
     overflow-y: auto;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
+    font-size: 0.95rem;
     color: #a9c7a3;
   }
 
   .output-label {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: #4e6756;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: 700;
   }
 
   .output-content {
     color: #cfe8c9;
+    line-height: 1.6;
   }
 
   .output-error {
@@ -270,6 +272,7 @@
     flex-direction: column;
     background: #07100a;
     overflow: hidden;
+    border-left: 2px solid #1c3322;
   }
 
   .cody-header {
@@ -323,7 +326,7 @@
   .chat-bubble {
     padding: 12px;
     border-radius: 8px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     line-height: 1.5;
     word-wrap: break-word;
   }
@@ -332,7 +335,7 @@
     background: #1a3523;
     color: #cfe8c9;
     align-self: flex-end;
-    max-width: 85%;
+    max-width: 95%;
   }
 
   .chat-bubble.cody {
@@ -340,7 +343,7 @@
     color: #a9c7a3;
     border: 1px solid #1c3322;
     align-self: flex-start;
-    max-width: 95%;
+    max-width: 100%;
   }
 
   .chat-bubble.cody strong {
@@ -352,6 +355,7 @@
     padding: 2px 6px;
     border-radius: 4px;
     color: #9CC24C;
+    font-size: 0.75rem;
   }
 
   .cody-suggestions {
@@ -367,7 +371,7 @@
     border-radius: 6px;
     color: #a9c7a3;
     padding: 10px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     cursor: pointer;
     font-family: 'JetBrains Mono', monospace;
     text-align: left;
@@ -382,7 +386,8 @@
 
   .cody-input-area {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    margin-bottom: 12px;
   }
 
   .cody-input-area input {
@@ -390,10 +395,10 @@
     background: #0F1F14;
     border: 1px solid #1c3322;
     border-radius: 6px;
-    padding: 10px 12px;
+    padding: 8px 10px;
     color: #cfe8c9;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     outline: none;
   }
 
@@ -406,9 +411,9 @@
     color: var(--ink);
     border: none;
     border-radius: 6px;
-    padding: 10px 16px;
+    padding: 8px 12px;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.15s;
   }
@@ -426,7 +431,7 @@
   }
 
   .challenge-label {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: #4e6756;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -446,7 +451,7 @@
     border-radius: 6px;
     color: #a9c7a3;
     padding: 10px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     cursor: pointer;
     text-align: left;
     transition: all 0.15s;
@@ -672,7 +677,13 @@
   }
 
   /* RESPONSIVE */
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
+    .main-container {
+      grid-template-columns: 1fr 320px;
+    }
+  }
+
+  @media (max-width: 900px) {
     .main-container {
       grid-template-columns: 1fr;
       height: auto;
@@ -682,15 +693,12 @@
     .editor-section {
       border-right: none;
       border-bottom: 1px solid #1c3322;
-      min-height: 50vh;
+      min-height: 60vh;
     }
 
     .cody-section {
-      min-height: 50vh;
-    }
-
-    .pricing-options {
-      grid-template-columns: 1fr;
+      min-height: 40vh;
+      border-left: none;
     }
   }
 
@@ -713,7 +721,7 @@
       Pythycoder
     </a>
     <nav class="nav-links">
-      <a href="javascript:void(0)">Documentation</a>
+      <a href="javascript:void(0)">Docs</a>
       <a href="javascript:void(0)">About</a>
     </nav>
     <div class="nav-right">
@@ -724,7 +732,7 @@
 </header>
 
 <div class="main-container">
-  <!-- LEFT: CODE EDITOR -->
+  <!-- LEFT: MASSIVE CODE EDITOR -->
   <div class="editor-section">
     <div class="editor-header">
       <div class="editor-header-left">
@@ -743,46 +751,46 @@
       </div>
 
       <div class="output-section">
-        <div class="output-label">Output</div>
+        <div class="output-label">📤 Output Console</div>
         <div class="output-content" id="output-console"></div>
       </div>
     </div>
   </div>
 
-  <!-- RIGHT: CODY AI ASSISTANT -->
+  <!-- RIGHT: CODY AI COACH -->
   <div class="cody-section">
     <div class="cody-header">
       <div class="cody-title">
         <div class="status-indicator"></div>
-        Cody AI Coach
+        Cody AI
       </div>
     </div>
 
     <div class="cody-content">
       <div class="cody-chat" id="cody-chat">
         <div class="chat-bubble cody">
-          <strong>Cody:</strong> Hey! I'm your coding coach. I won't write code for you, but I'll help you understand how to solve each challenge. Ask me questions when you get stuck!
+          <strong>Cody:</strong> Hey! I'm your coding coach. I won't write code for you, but I'll help you understand how to solve each challenge. Ask me questions!
         </div>
       </div>
 
       <div class="cody-suggestions">
-        <button class="suggestion-btn" onclick="askCody('challenge')">❓ What's this challenge about?</button>
-        <button class="suggestion-btn" onclick="askCody('stuck')">🤔 I'm stuck, help me!</button>
-        <button class="suggestion-btn" onclick="askCody('concept')">💡 Explain the concept</button>
+        <button class="suggestion-btn" onclick="askCody('challenge')">❓ About this?</button>
+        <button class="suggestion-btn" onclick="askCody('stuck')">🤔 I'm stuck</button>
+        <button class="suggestion-btn" onclick="askCody('concept')">💡 Explain</button>
       </div>
 
       <div class="cody-input-area">
-        <input type="text" id="cody-input" placeholder="Ask Cody anything..." onkeypress="if(event.key === 'Enter') sendToCody()">
-        <button class="cody-send-btn" onclick="sendToCody()">Send</button>
+        <input type="text" id="cody-input" placeholder="Ask Cody..." onkeypress="if(event.key === 'Enter') sendToCody()">
+        <button class="cody-send-btn" onclick="sendToCody()">→</button>
       </div>
     </div>
 
     <div class="challenge-selector">
-      <div class="challenge-label">Select Challenge</div>
+      <div class="challenge-label">🎯 Challenges</div>
       <div class="challenge-buttons">
-        <button class="challenge-btn active" onclick="loadChallenge(1)">Challenge 1: FizzBuzz</button>
-        <button class="challenge-btn" id="ch2-btn" onclick="loadChallenge(2)">Challenge 2: Even/Odd</button>
-        <button class="challenge-btn" id="ch3-btn" onclick="loadChallenge(3)">Challenge 3: Sum Numbers</button>
+        <button class="challenge-btn active" onclick="loadChallenge(1)">1. FizzBuzz</button>
+        <button class="challenge-btn" id="ch2-btn" onclick="loadChallenge(2)">2. Even/Odd</button>
+        <button class="challenge-btn" id="ch3-btn" onclick="loadChallenge(3)">3. Sum Numbers</button>
       </div>
     </div>
   </div>
@@ -799,9 +807,9 @@
         <h3>Starter</h3>
         <div class="plan-price">$9.99</div>
         <ul class="plan-features">
-          <li>✓ All 10 challenges</li>
+          <li>✓ 10 challenges</li>
           <li>✓ Cody AI coach</li>
-          <li>✓ 1 month access</li>
+          <li>✓ 1 month</li>
         </ul>
       </div>
 
@@ -809,9 +817,9 @@
         <h3>Pro</h3>
         <div class="plan-price">$19.99</div>
         <ul class="plan-features">
-          <li>✓ All 50+ challenges</li>
-          <li>✓ Advanced Cody</li>
-          <li>✓ 12 months access</li>
+          <li>✓ 50+ challenges</li>
+          <li>✓ Premium Cody</li>
+          <li>✓ 12 months</li>
         </ul>
       </div>
     </div>
@@ -842,12 +850,12 @@
 </div>
 
 <footer>
-  <p>© 2024 Pythycoder. Learn coding with AI guidance. All challenges included with Premium.</p>
+  <p>© 2024 Pythycoder. Learn with AI guidance.</p>
 </footer>
 
 <script>
   // Initialize Stripe
-  const stripe = Stripe('pk_test_51234567890abcdefghijklmnop'); // Test key
+  const stripe = Stripe('pk_test_51234567890abcdefghijklmnop');
   const elements = stripe.elements();
   const cardElement = elements.create('card');
   cardElement.mount('#card-element');
@@ -956,7 +964,7 @@ print(sum_numbers(10)) # Should print 55`,
     });
     if (!challenges[id].premium || isPremium) {
       document.querySelectorAll('.challenge-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      document.querySelectorAll('.challenge-btn')[id - 1].classList.add('active');
     }
 
     // Clear chat
@@ -1007,12 +1015,12 @@ print(sum_numbers(10)) # Should print 55`,
   // CODY RESPONSES
   const codyResponses = {
     challenge: "This challenge is about solving a specific programming problem. Read the instructions carefully, start with the function signature, and build your logic step by step. Don't try to solve it all at once!",
-    stuck: "Take a deep breath! Break your problem into smaller parts. What's the first step? Try writing that first, then test it. If you're still stuck, ask me about a specific part of the problem.",
-    concept: "Every challenge teaches you a programming concept. Look at the hints I give you—they point to the key concept you need to use. Try to understand WHY the concept works, not just HOW to use it."
+    stuck: "Take a deep breath! Break your problem into smaller parts. What's the first step? Try writing that first, then test it. If you're still stuck, ask me about a specific part.",
+    concept: "Every challenge teaches you a programming concept. Look at the hints I give you—they point to the key concept you need. Try to understand WHY the concept works."
   };
 
   function askCody(type) {
-    addCodyMessage('Me: ' + Object.keys(codyResponses)[Object.keys(codyResponses).indexOf(type)], 'user');
+    addCodyMessage('You: ' + Object.keys(codyResponses)[Object.keys(codyResponses).indexOf(type)], 'user');
     setTimeout(() => {
       addCodyMessage('<strong>Cody:</strong> ' + codyResponses[type], 'cody');
     }, 300);
@@ -1028,11 +1036,11 @@ print(sum_numbers(10)) # Should print 55`,
     input.value = '';
 
     const responses = [
-      "Great question! Let me help you think through this. What part are you working on right now?",
-      "That's a smart observation! Try experimenting with that idea in your code and see what happens.",
-      "You're on the right track! Remember, every problem can be broken down into smaller steps.",
-      "Interesting approach! Have you considered using a loop or a conditional statement?",
-      "Don't give up! The best way to learn is to try different solutions and see what works."
+      "Great question! What part are you working on right now?",
+      "That's a smart observation! Try experimenting with that idea.",
+      "You're on the right track! Break it into smaller steps.",
+      "Have you considered using a loop or conditional?",
+      "Don't give up! Try different solutions and see what works."
     ];
 
     setTimeout(() => {
@@ -1095,14 +1103,12 @@ print(sum_numbers(10)) # Should print 55`,
     errorMsg.style.display = 'none';
 
     try {
-      // Create payment token with Stripe
       const { token, error } = await stripe.createToken(cardElement, { email });
 
       if (error) {
         throw error;
       }
 
-      // Simulate successful payment
       setTimeout(() => {
         isPremium = true;
         updatePremiumUI();
@@ -1114,7 +1120,7 @@ print(sum_numbers(10)) # Should print 55`,
           closePaymentModal();
           payBtn.disabled = true;
           payText.textContent = `Pay $${selectedPrice.toFixed(2)}`;
-          addCodyMessage(`<strong>Cody:</strong> Awesome! Welcome to the Premium tier! You now have access to all ${selectedPlan === 'pro' ? '50+' : '10'} challenges. Let's unlock your potential!`, 'cody');
+          addCodyMessage(`<strong>Cody:</strong> Welcome to Premium! You now have access to all challenges. Let's unlock your potential! 🚀`, 'cody');
         }, 2000);
       }, 1500);
 
@@ -1127,7 +1133,6 @@ print(sum_numbers(10)) # Should print 55`,
     }
   }
 
-  // Handle Stripe card changes
   cardElement.addEventListener('change', (event) => {
     const displayError = document.getElementById('error-message');
     if (event.error) {
