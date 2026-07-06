@@ -25,7 +25,7 @@
   html{ scroll-behavior:smooth; }
   body{
     margin:0;
-    background:var(--parchment);
+    background:var(--code-bg);
     color:var(--ink);
     font-family:'Inter', sans-serif;
     font-size:16px;
@@ -51,21 +51,21 @@
   /* ---------- NAV ---------- */
   header.site{
     position:sticky; top:0; z-index:50;
-    background:rgba(243,238,221,0.92);
+    background:rgba(15, 31, 20, 0.95);
     backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid #1c3322;
   }
   .nav{
     display:flex; align-items:center; justify-content:space-between;
-    padding:18px 32px; max-width:1120px; margin:0 auto;
+    padding:18px 32px; max-width:100%; margin:0 auto;
   }
   .brand{
     display:flex; align-items:center; gap:8px;
     font-family:'Fraunces', serif; font-weight:700; font-size:1.35rem;
-    color:var(--jungle-deep); text-decoration:none;
+    color:var(--moss-bright); text-decoration:none;
   }
   .brand-icon {
-    background: var(--jungle-deep); color: var(--moss-bright);
+    background: var(--moss-bright); color: var(--jungle-deep);
     width: 32px; height: 32px; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.1rem;
@@ -73,543 +73,650 @@
   .nav-links{ display:flex; gap:28px; align-items:center; }
   .nav-links a{
     text-decoration:none; font-size:0.95rem; font-weight:500;
-    color:var(--jungle-mid); transition:color .15s;
+    color:#cfe8c9; transition:color .15s;
   }
   .nav-links a:hover{ color:var(--moss-bright); }
-  .btn-gh{
-    display:inline-flex; align-items:center; gap:8px;
-    background:var(--jungle-deep); color:var(--parchment);
-    padding:9px 18px; border-radius:7px; font-size:0.9rem; font-weight:600;
-    text-decoration:none; border:1px solid var(--jungle-deep);
-    transition:transform .15s ease, background .15s ease;
-  }
-  .btn-gh:hover{ background:var(--jungle-mid); transform:translateY(-1px); }
 
-  /* ---------- HERO ---------- */
-  .hero{ position:relative; padding:40px 0 80px; overflow:hidden; }
-  .hero-grid{ display:grid; grid-template-columns:1fr; gap:40px; align-items:center; }
-  @media(min-width: 901px) { .hero-grid { grid-template-columns: 1fr 1.3fr; } }
-  
-  .eyebrow{
-    font-family:'JetBrains Mono', monospace; font-size:0.8rem; letter-spacing:0.08em;
-    text-transform:uppercase; color:var(--moss); font-weight:600; margin-bottom:14px;
-    display:flex; align-items:center; gap:10px;
+  /* ---------- MAIN LAYOUT ---------- */
+  .main-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: calc(100vh - 60px);
+    gap: 0;
   }
-  .eyebrow::before{ content:""; width:22px; height:2px; background:var(--moss-bright); display:inline-block; }
-  .hero h1{ font-size:clamp(2.2rem, 3.8vw, 3.2rem); font-weight:600; line-height:1.1; margin-bottom:18px; }
-  .hero h1 em { font-style:italic; color:var(--moss); }
-  .hero p.lede{ font-size:1.1rem; color:var(--jungle-mid); max-width:46ch; margin-bottom:28px; }
-  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
 
-  /* Buttons */
-  .btn-primary{
-    background:var(--moss-bright); color:var(--ink);
-    padding:13px 24px; border-radius:8px; font-weight:600; text-decoration:none;
-    font-size:0.98rem; border:none; cursor:pointer;
-    box-shadow:0 3px 0 0 #6f8a2f; transition:transform .12s ease, box-shadow .12s ease;
+  /* LEFT: CODE EDITOR SECTION */
+  .editor-section {
+    display: flex;
+    flex-direction: column;
+    background: var(--code-bg);
+    border-right: 1px solid #1c3322;
+    overflow: hidden;
   }
-  .btn-primary:hover{ transform:translateY(2px); box-shadow:0 1px 0 0 #6f8a2f; }
-  .btn-secondary{
-    padding:13px 22px; border-radius:8px; font-weight:600; text-decoration:none;
-    font-size:0.98rem; color:var(--jungle-deep); border:1.5px solid var(--jungle-deep);
-    background:none; cursor:pointer; transition:background .12s ease;
-  }
-  .btn-secondary:hover{ background:rgba(20,46,29,0.06); }
 
-  /* ---------- NEW LAYOUT WORKSPACE ---------- */
-  .workspace {
-    background: var(--code-bg); border-radius: 12px;
-    box-shadow: 0 24px 60px -20px rgba(15,31,20,0.55);
-    overflow: hidden; border: 1px solid #1c3322; display: flex; flex-direction: column;
+  .editor-header {
+    padding: 16px;
+    background: #0C1911;
+    border-bottom: 1px solid #1c3322;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .workspace-bar {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 16px; background: #0C1911; border-bottom: 1px solid #1c3322;
+
+  .editor-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
-  .dots { display: flex; gap: 8px; }
-  .dots span { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-  .dots span:nth-child(1) { background: #e0654c; }
-  .dots span:nth-child(2) { background: #e8b24a; }
-  .dots span:nth-child(3) { background: #7c9a3a; }
-  
+
+  .editor-filename {
+    font-size: 0.9rem;
+    color: #cfe8c9;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
   .score-badge {
-    background: #1a3523; color: var(--moss-bright); font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; border: 1px solid #24422f;
+    background: #1a3523; 
+    color: var(--moss-bright); 
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; 
+    padding: 6px 12px; 
+    border-radius: 6px; 
+    border: 1px solid #24422f;
   }
 
-  /* Two Column Split Setup matching wireframe sketch */
-  .three-pane-container {
-    display: grid; grid-template-columns: 1fr 1fr; background: #0F1F14; min-height: 580px;
-  }
-  
-  /* Left Column: Stacked Editor and Cody Chat */
-  .left-workspace-column {
-    display: flex; flex-direction: column; border-right: 1px solid #1c3322;
+  .editor-controls {
+    display: flex;
+    gap: 8px;
   }
 
-  /* TOP: Code Editor Box */
-  .code-pane { 
-    padding: 16px; display: flex; flex-direction: column; background: #0F1F14; 
-    flex: 1; border-bottom: 1px solid #1c3322;
-  }
-  .code-pane textarea {
-    width: 100%; height: 100%; min-height: 220px; background: transparent; border: none; outline: none;
-    color: #cfe8c9; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; resize: none; line-height: 1.5;
+  .btn-run {
+    background: var(--moss-bright);
+    color: var(--ink);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
   }
 
-  /* BOTTOM: Cody Assistant Chat */
-  .cody-sidebar { 
-    background: #09140d; display: flex; flex-direction: column; height: 260px;
+  .btn-run:hover {
+    background: #8fb03f;
+    transform: translateY(-1px);
   }
+
+  .btn-reset {
+    background: #1a3523;
+    color: #cfe8c9;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: 1px solid #24422f;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-reset:hover {
+    background: #234530;
+  }
+
+  .editor-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    overflow: hidden;
+  }
+
+  .code-editor-container {
+    flex: 1;
+    position: relative;
+    border: 1px solid #1c3322;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #07100a;
+  }
+
+  .code-editor-container textarea {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #cfe8c9;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    padding: 16px;
+    resize: none;
+    line-height: 1.6;
+    tab-size: 2;
+  }
+
+  .code-editor-container textarea::placeholder {
+    color: #4e6756;
+  }
+
+  .output-section {
+    margin-top: 12px;
+    background: #0C1911;
+    border: 1px solid #1c3322;
+    border-radius: 8px;
+    padding: 12px;
+    max-height: 200px;
+    overflow-y: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #a9c7a3;
+  }
+
+  .output-label {
+    font-size: 0.7rem;
+    color: #4e6756;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .output-content {
+    color: #cfe8c9;
+  }
+
+  .output-error {
+    color: #e0654c;
+  }
+
+  .output-success {
+    color: var(--moss-bright);
+  }
+
+  /* RIGHT: CODY AI SIDEBAR */
+  .cody-section {
+    display: flex;
+    flex-direction: column;
+    background: #07100a;
+    overflow: hidden;
+  }
+
   .cody-header {
-    padding: 8px 12px; background: #0c1911; border-bottom: 1px solid #1c3322;
-    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px;
+    background: #0C1911;
+    border-bottom: 1px solid #1c3322;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-  .cody-chat-history {
-    flex-grow: 1; padding: 12px; overflow-y: auto; font-size: 0.82rem;
-    display: flex; flex-direction: column; gap: 8px; max-height: 140px;
+
+  .cody-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--moss-bright);
   }
-  .chat-msg { padding: 6px 10px; border-radius: 6px; max-width: 90%; line-height: 1.4; }
-  .chat-msg.user { background: #1a3523; color: #cfe8c9; align-self: flex-end; }
-  .chat-msg.cody { background: #112617; color: #a9c7a3; align-self: flex-start; border: 1px solid #1c3322; }
-  .chat-msg.cody strong { color: var(--moss-bright); }
-  
-  .cody-suggestions { display: flex; gap: 6px; padding: 6px 12px; background: #07100a; overflow-x: auto; }
-  .suggestion-chip {
-    background: #112617; border: 1px solid #1c3322; border-radius: 4px; white-space: nowrap;
-    color: #a9c7a3; font-size: 0.7rem; text-align: left; padding: 4px 8px;
-    cursor: pointer; font-family: 'JetBrains Mono', monospace; transition: all 0.15s;
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--moss-bright);
+    animation: pulse 2s infinite;
   }
-  .suggestion-chip:hover { background: #1a3523; color: var(--moss-bright); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .cody-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 16px;
+  }
+
+  .cody-chat {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .chat-bubble {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+
+  .chat-bubble.user {
+    background: #1a3523;
+    color: #cfe8c9;
+    align-self: flex-end;
+    max-width: 85%;
+  }
+
+  .chat-bubble.cody {
+    background: #112617;
+    color: #a9c7a3;
+    border: 1px solid #1c3322;
+    align-self: flex-start;
+    max-width: 95%;
+  }
+
+  .chat-bubble.cody strong {
+    color: var(--moss-bright);
+  }
+
+  .chat-bubble.cody code {
+    background: #07100a;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #9CC24C;
+  }
+
+  .cody-suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .suggestion-btn {
+    background: #112617;
+    border: 1px solid #1c3322;
+    border-radius: 6px;
+    color: #a9c7a3;
+    padding: 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    text-align: left;
+    transition: all 0.15s;
+  }
+
+  .suggestion-btn:hover {
+    background: #1a3523;
+    color: var(--moss-bright);
+    border-color: var(--moss-bright);
+  }
 
   .cody-input-area {
-    padding: 8px 12px; border-top: 1px solid #1c3322; background: #07100a; display: flex; gap: 6px;
-  }
-  .cody-input-area input {
-    flex-grow: 1; background: #0F1F14; border: 1px solid #1c3322;
-    border-radius: 4px; padding: 6px 10px; color: #cfe8c9; font-size: 0.82rem; outline: none;
-  }
-  .cody-send-btn {
-    background: var(--jungle-deep); color: var(--moss-bright); border: 1px solid #1c3322;
-    padding: 0 12px; border-radius: 4px; font-weight: 600; font-size: 0.8rem; cursor: pointer;
+    display: flex;
+    gap: 8px;
   }
 
-  /* RIGHT SIDE: Full Height Output Panel */
-  .output-pane { background: #07100a; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #a9c7a3; display: flex; flex-direction: column; }
-  .output-pane .pane-label { font-size: 0.75rem; color: #4e6756; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; font-weight: 700; }
-  .console-terminal-lines { flex-grow: 1; white-space: pre-wrap; }
-  .system-msg { color: var(--amber); }
-  
-  .workspace-actions {
-    padding: 10px 16px; background: #0C1911; display: flex; justify-content: space-between; align-items: center;
+  .cody-input-area input {
+    flex: 1;
+    background: #0F1F14;
+    border: 1px solid #1c3322;
+    border-radius: 6px;
+    padding: 10px 12px;
+    color: #cfe8c9;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    outline: none;
+  }
+
+  .cody-input-area input::placeholder {
+    color: #4e6756;
+  }
+
+  .cody-send-btn {
+    background: var(--moss-bright);
+    color: var(--ink);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .cody-send-btn:hover {
+    background: #8fb03f;
+    transform: translateY(-1px);
+  }
+
+  /* CHALLENGE SELECTOR */
+  .challenge-selector {
+    padding: 16px;
+    background: #0C1911;
     border-top: 1px solid #1c3322;
   }
 
-  /* ---------- POPUP MODAL (CHECKOUT & SYSTEM) ---------- */
-  .modal-backdrop {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--modal-overlay); z-index: 100; display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+  .challenge-label {
+    font-size: 0.7rem;
+    color: #4e6756;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    font-weight: 700;
   }
-  .modal-backdrop.open { opacity: 1; pointer-events: auto; }
-  .payment-modal {
-    background: var(--parchment); border: 2px solid var(--jungle-deep); border-radius: 12px;
-    width: 100%; max-width: 440px; padding: 32px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    position: relative; transform: translateY(20px); transition: transform 0.2s ease;
+
+  .challenge-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
-  .modal-backdrop.open .payment-modal { transform: translateY(0); }
-  
-  .stripe-input {
-    background: #fff; border: 1px solid var(--jungle-mid); border-radius: 6px;
-    padding: 12px; margin: 12px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+
+  .challenge-btn {
+    background: #112617;
+    border: 1px solid #1c3322;
+    border-radius: 6px;
+    color: #a9c7a3;
+    padding: 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    font-weight: 500;
   }
-  
-  /* Spinner */
-  .spinner {
-    display: none; width: 24px; height: 24px; border: 3px solid rgba(20,46,29,0.2);
-    border-radius: 50%; border-top-color: var(--jungle-deep); animation: spin 0.8s linear infinite;
-    margin: 12px auto;
+
+  .challenge-btn:hover {
+    background: #1a3523;
+    border-color: var(--moss-bright);
+    color: var(--moss-bright);
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ---------- CURRICULUM SYLLABUS ---------- */
-  .section { padding:64px 0; }
-  .section-head { max-width:640px; margin-bottom:40px; }
-  .section-head h2 { font-size:clamp(1.8rem,3vw,2.4rem); font-weight:600; margin-bottom:12px; }
-  .features { background:var(--parchment-dim); }
-
-  .trail-steps { display:flex; flex-direction:column; }
-  .trail-step { display:grid; grid-template-columns:76px 1fr; gap:24px; padding:24px 0; align-items:start; }
-  .trail-step .node {
-    width:38px; height:38px; border-radius:50%; background:var(--parchment); border:3px solid var(--moss-bright);
-    display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono', monospace; font-weight:700;
+  .challenge-btn.active {
+    background: var(--moss-bright);
+    color: var(--ink);
+    border-color: var(--moss-bright);
   }
-  .trail-step .tag { display:inline-block; font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--moss); background:rgba(124,154,58,0.12); padding:4px 10px; border-radius:20px; margin-bottom: 6px; }
 
-  /* ---------- PRICING ---------- */
-  .pricing-section { background: var(--parchment-dim); border-top: 1px solid var(--line); }
-  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 840px; margin: 0 auto; }
-  .price-card { background: var(--parchment); border: 2px solid var(--jungle-deep); border-radius: 12px; padding: 36px; display: flex; flex-direction: column; position: relative;}
-  .price-card.popular { box-shadow: 0 16px 32px rgba(20,46,29,0.1); }
-  .price-card h3 { font-size: 1.6rem; }
-  .price-card .cost { font-size: 2.5rem; font-weight: 700; color: var(--jungle-deep); margin: 16px 0; font-family: 'Fraunces', serif; }
-  .price-card ul { list-style: none; padding: 0; margin: 0 0 32px 0; display: flex; flex-direction: column; gap: 12px; }
-  .price-card ul li::before { content: "✓ "; color: var(--moss); font-weight: bold; }
-  .badge { position: absolute; top: -14px; right: 24px; background: var(--amber); color: var(--ink); font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: 2px solid var(--jungle-deep); }
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .main-container {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: calc(100vh - 60px);
+    }
 
-  /* ---------- OWNER ADMIN ADJUSTMENT PANEL ---------- */
-  .admin-panel {
-    background: #07100a; color: #a9c7a3; padding: 12px; font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem; border-bottom: 1px solid #1c3322; display: flex; align-items: center; justify-content: center; gap: 14px;
+    .editor-section {
+      border-right: none;
+      border-bottom: 1px solid #1c3322;
+      min-height: 50vh;
+    }
+
+    .cody-section {
+      min-height: 50vh;
+    }
   }
-  .admin-panel input { background: #0F1F14; border: 1px solid #24422f; color: #cfe8c9; padding: 4px 8px; border-radius: 4px; width: 70px; }
 
-  footer { padding:44px 0; border-top:1px solid var(--line); text-align: center; color: var(--jungle-mid); font-size: 0.9rem;}
-
-  @media (max-width:900px){
-    .three-pane-container { grid-template-columns: 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; }
+  footer {
+    padding: 16px;
+    text-align: center;
+    color: #4e6756;
+    font-size: 0.85rem;
+    border-top: 1px solid #1c3322;
+    background: #0C1911;
   }
 </style>
 </head>
 <body>
 
-<!-- OWNER ADMINISTRATIVE CONFIGURATOR -->
-<div class="admin-panel">
-  <div><span style="background:var(--amber); color:#12200F; font-weight:bold; padding:2px 6px; border-radius:3px;">STORE CONTROL</span> Live Price Tuning:</div>
-  <label>Super Plan: <input type="text" id="cfg-super" value="$5"></label>
-  <label>Pro Plan: <input type="text" id="cfg-pro" value="$12"></label>
-</div>
-
 <header class="site">
   <div class="nav">
-    <a href="#" class="brand"><div class="brand-icon">π</div>Pythycoder</a>
+    <a href="#" class="brand">
+      <div class="brand-icon">π</div>
+      Pythycoder
+    </a>
     <nav class="nav-links">
-      <a href="#trail">Curriculum</a>
-      <a href="#editor-anchor">Workspace</a>
-      <a href="#pricing">Premium Plans</a>
+      <a href="javascript:void(0)">Documentation</a>
+      <a href="javascript:void(0)">About</a>
+      <a href="javascript:void(0)">Contact</a>
     </nav>
-    <a class="btn-gh" href="#pricing">Buy Now</a>
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <div class="eyebrow">Interactive Code-Along</div>
-      <h1>Cody explains the logic. <em>You</em> write the programs.</h1>
-      <p class="lede">No cheating shortcuts. Pythycoder pairs you with an elite engineering coach. Ask Cody questions when stuck, get algorithmic architecture blueprints, and write code to earn progress credentials.</p>
-      <div class="hero-ctas">
-        <a class="btn-primary" href="#editor-anchor">Open Code Workspace</a>
-        <a class="btn-secondary" href="#pricing">Purchase Access Tier</a>
+<div class="main-container">
+  <!-- LEFT: CODE EDITOR -->
+  <div class="editor-section">
+    <div class="editor-header">
+      <div class="editor-header-left">
+        <span class="editor-filename" id="filename">challenge.py</span>
+        <span class="score-badge">XP: <span id="xp-counter">0</span></span>
+      </div>
+      <div class="editor-controls">
+        <button class="btn-run" onclick="runCode()">▶ Run Code</button>
+        <button class="btn-reset" onclick="resetCode()">↻ Reset</button>
       </div>
     </div>
-    
-    <!-- SPLIT-PANEL WORKSPACE (MATCHING WIREFRAME SKETCH) -->
-    <div class="workspace" id="editor-anchor">
-      <div class="workspace-bar">
-        <div class="dots"><span></span><span></span><span></span></div>
-        <div class="score-badge">XP Metrics: <span id="xp-counter">0</span> pts</div>
+
+    <div class="editor-wrapper">
+      <div class="code-editor-container">
+        <textarea id="code-editor" spellcheck="false" placeholder="# Write your Python code here...&#10;# Cody will help guide you through challenges!"></textarea>
       </div>
-      
-      <div class="three-pane-container">
-        <!-- LEFT COLUMN: CODE ON TOP, CODY CHAT ON BOTTOM -->
-        <div class="left-workspace-column">
-          
-          <!-- CODE PANEL (TOP LEFT) -->
-          <div class="code-pane">
-            <div style="font-size: 0.7rem; color: #4e6756; margin-bottom: 6px;" id="ws-filename">challenge_one.py</div>
-            <textarea id="editor-textarea" spellcheck="false"># Challenge 1: Write a function named 'fizzbuzz' 
-# that prints "Fizz" if divisible by 3.
-def fizzbuzz(num):
-    # Your code here. Cody says: use the modulo operator (%)
-    </textarea>
-          </div>
 
-          <!-- CODY ASSISTANT SIDEBAR (BOTTOM LEFT) -->
-          <div class="cody-sidebar">
-            <div class="cody-header">
-              <div style="font-size:0.8rem; font-weight:600; color:#cfe8c9;">cody</div>
-              <span style="font-size: 0.7rem; color: var(--moss-bright)">● Online</span>
-            </div>
-            <div class="cody-chat-history" id="cody-chats">
-              <div class="chat-msg cody">
-                Hey there! I am <strong>Cody</strong>. I won't write the code for you—that's your job! But ask me questions or tell me where you're stuck, and I'll map out your logic blueprints.
-              </div>
-            </div>
-            <div class="cody-suggestions">
-              <button class="suggestion-chip" onclick="askCodyHelp('fizzbuzz')">❓ Strategy for Challenge 1</button>
-              <button class="suggestion-chip" onclick="askCodyHelp('discord')">❓ Architecture for Challenge 2</button>
-            </div>
-            <div class="cody-input-area">
-              <input type="text" id="cody-chat-input" placeholder="Stuck? Call for Cody..." onkeydown="if(event.key === 'Enter') freeformCodyChat()">
-              <button class="cody-send-btn" onclick="freeformCodyChat()">Ask</button>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- RIGHT COLUMN: FULL HEIGHT OUTPUT/TERMINAL -->
-        <div class="output-pane">
-          <div class="pane-label">OUTPUT</div>
-          <div class="console-terminal-lines" id="console-terminal">
-            <span class="system-msg">[System Initialization Complete]: Code execution loops verified. Select a curriculum challenge below or call Cody for tactical blueprints.</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="workspace-actions">
-        <span style="font-size: 0.75rem; color: #5f7a67;" id="challenge-status">Current Active Target: Challenge 1</span>
-        <button class="btn-primary" style="padding: 6px 18px; font-size: 0.85rem; box-shadow: 0 2px 0 0 #6f8a2f;" onclick="compileAndTestCode()">Run Test Harness</button>
+      <div class="output-section">
+        <div class="output-label">Output</div>
+        <div class="output-content" id="output-console"></div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- CURRICULUM SYLLABUS -->
-<section class="section" id="trail">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">158-Module Curriculum Sandbox</div>
-      <h2>Select an Active Challenge Goal</h2>
-      <p>Click a module template block below to alter your active code editor target structure.</p>
+  <!-- RIGHT: CODY AI ASSISTANT -->
+  <div class="cody-section">
+    <div class="cody-header">
+      <div class="cody-title">
+        <div class="status-indicator"></div>
+        Cody AI Coach
+      </div>
     </div>
-    
-    <div class="trail-steps">
-      <div class="trail-step">
-        <div class="node">01</div>
-        <div class="content">
-          <span class="tag">Module 1 Challenge</span>
-          <h3>Conditional FizzBuzz Loop Routing</h3>
-          <p>Implement core math logic variables mapping evaluation matrices inside conditional loops.</p>
-          <button class="btn-secondary" style="padding:4px 12px; font-size:0.8rem;" onclick="loadChallengeWorkspace(1)">Mount Challenge 1 Template</button>
+
+    <div class="cody-content">
+      <div class="cody-chat" id="cody-chat">
+        <div class="chat-bubble cody">
+          <strong>Cody:</strong> Hey! I'm your coding coach. I won't write code for you, but I'll help you understand how to solve each challenge. Ask me questions when you get stuck!
         </div>
       </div>
-      <div class="trail-step">
-        <div class="node">07</div>
-        <div class="content">
-          <span class="tag">Module 7 Challenge</span>
-          <h3>Asynchronous Discord Network Token Handshake</h3>
-          <p>Write an operational `on_message` asynchronous handler loop framework without leaking variables.</p>
-          <button class="btn-secondary" style="padding:4px 12px; font-size:0.8rem;" onclick="loadChallengeWorkspace(7)">Mount Challenge 2 Template</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- PREMIUM PLANS -->
-<section class="section pricing-section" id="pricing">
-  <div class="wrap">
-    <div class="section-head" style="text-align: center; margin: 0 auto 48px;">
-      <div class="eyebrow" style="justify-content: center;">Instant Commercial Gateway Activation</div>
-      <h2>Unlock Complete 158-Module Access</h2>
-    </div>
-    
-    <div class="pricing-grid">
-      <div class="price-card">
-        <h3>Super Access Package</h3>
-        <p style="color:var(--jungle-mid); font-size:0.9rem;">Complete structural access keys to standard sandboxes.</p>
-        <div class="cost" id="tier-super-display">$5</div>
-        <ul>
-          <li>All foundational challenge modules unlocked</li>
-          <li>Full conceptual Cody guidance engine</li>
-          <li>Integrated terminal scoring hooks</li>
-        </ul>
-        <button class="btn-secondary" style="margin-top:auto; width:100%;" onclick="launchCheckoutWindow('Super Plan')">Access Super Tier</button>
+      <div class="cody-suggestions">
+        <button class="suggestion-btn" onclick="askCody('challenge')">❓ What's this challenge about?</button>
+        <button class="suggestion-btn" onclick="askCody('stuck')">🤔 I'm stuck, help me!</button>
+        <button class="suggestion-btn" onclick="askCody('concept')">💡 Explain the concept</button>
       </div>
 
-      <div class="price-card popular">
-        <div class="badge">POPULAR CHOICE</div>
-        <h3>Pro Scale Pipeline Plan</h3>
-        <p style="color:var(--jungle-mid); font-size:0.9rem;">Engineered for ambitious pros needing absolute architecture deployment tracks.</p>
-        <div class="cost" id="tier-pro-display">$12</div>
-        <ul>
-          <li>Everything in the Super tier matrix</li>
-          <li>Premium Git deployment code modules</li>
-          <li>Priority compilation support assets</li>
-        </ul>
-        <button class="btn-primary" style="margin-top:auto; width:100%; box-shadow: 0 3px 0 0 #6f8a2f;" onclick="launchCheckoutWindow('Pro Plan')">Access Pro Premium</button>
+      <div class="cody-input-area">
+        <input type="text" id="cody-input" placeholder="Ask Cody anything..." onkeypress="if(event.key === 'Enter') sendToCody()">
+        <button class="cody-send-btn" onclick="sendToCody()">Send</button>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- STRIPE PAYMENT MODAL -->
-<div class="modal-backdrop" id="checkout-gateway-modal">
-  <div class="payment-modal">
-    <h3 style="font-size:1.4rem; margin-bottom:4px;" id="modal-tier-title">Secure Checkout Gateway</h3>
-    <p style="margin:0 0 16px 0; font-size:0.88rem; color:var(--jungle-mid);">Powered by Stripe Elements Core Processing Framework.</p>
-    
-    <div style="font-size:0.85rem; font-weight:600; margin-bottom:4px;">Credit Card Details</div>
-    <div class="stripe-input" contenteditable="true">4242  • • • •  • • • •  4242</div>
-    
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-      <div>
-        <div style="font-size:0.85rem; font-weight:600; margin-bottom:4px;">Expiry Date</div>
-        <div class="stripe-input" contenteditable="true">MM / YY</div>
+    <div class="challenge-selector">
+      <div class="challenge-label">Select Challenge</div>
+      <div class="challenge-buttons">
+        <button class="challenge-btn active" onclick="loadChallenge(1)">Challenge 1: FizzBuzz</button>
+        <button class="challenge-btn" onclick="loadChallenge(2)">Challenge 2: Even/Odd</button>
+        <button class="challenge-btn" onclick="loadChallenge(3)">Challenge 3: Sum Numbers</button>
       </div>
-      <div>
-        <div style="font-size:0.85rem; font-weight:600; margin-bottom:4px;">CVC Number</div>
-        <div class="stripe-input" contenteditable="true">•••</div>
-      </div>
-    </div>
-    
-    <div class="spinner" id="payment-spinner"></div>
-    <div id="payment-success-msg" style="display:none; color:var(--moss); font-weight:bold; text-align:center; margin:12px 0; font-size:0.95rem;">✓ Payment Authorized! License issued instantly.</div>
-
-    <div style="display:flex; justify-content:space-between; margin-top:20px; gap:12px;">
-      <button class="btn-secondary" style="padding:8px 16px; font-size:0.9rem;" onclick="closeCheckoutWindow()">Cancel</button>
-      <button class="btn-primary" id="pay-submit-btn" style="padding:8px 20px; font-size:0.9rem; box-shadow:none;" onclick="processSimulatedStripeCharge()">Complete Purchase</button>
     </div>
   </div>
 </div>
 
 <footer>
-  <p>© Pythycoder Software Corporation License Gateway. Secure transaction checkout endpoints verified.</p>
+  <p>© 2024 Pythycoder. Learn coding with AI guidance. Code responsibly.</p>
 </footer>
 
 <script>
-  // STOREFRONT PRICES ENGINE
-  const superInp = document.getElementById('cfg-super');
-  const proInp = document.getElementById('cfg-pro');
-  const superTxt = document.getElementById('tier-super-display');
-  const proTxt = document.getElementById('tier-pro-display');
+  // CHALLENGES DATA
+  const challenges = {
+    1: {
+      name: 'FizzBuzz',
+      filename: 'challenge_1.py',
+      starter: `# Challenge 1: FizzBuzz
+# Write a function that prints "Fizz" if divisible by 3
+# and "Buzz" if divisible by 5
 
-  function synchStorefrontPrices() {
-    superTxt.textContent = superInp.value;
-    proTxt.textContent = proInp.value;
-  }
-  superInp.addEventListener('input', synchStorefrontPrices);
-  proInp.addEventListener('input', synchStorefrontPrices);
+def fizzbuzz(num):
+    # Your code here
+    pass
 
-  // APP LOGIC MATRIX
-  let playerXP = 0;
-  let activeChallengeId = 1;
+# Test your function
+fizzbuzz(3)
+fizzbuzz(5)
+fizzbuzz(15)`,
+      hint: 'Use the modulo operator (%) to check divisibility. For example: num % 3 == 0 checks if num is divisible by 3.',
+      solution_check: (code) => code.includes('def fizzbuzz') && code.includes('%')
+    },
+    2: {
+      name: 'Even/Odd',
+      filename: 'challenge_2.py',
+      starter: `# Challenge 2: Even or Odd
+# Write a function that returns "Even" if the number is even
+# and "Odd" if the number is odd
 
-  const chatContainer = document.getElementById('cody-chats');
-  const codeEditor = document.getElementById('editor-textarea');
-  const consoleTerminal = document.getElementById('console-terminal');
-  const filenameLabel = document.getElementById('ws-filename');
-  const challengeIndicator = document.getElementById('challenge-status');
-  const xpCounterElement = document.getElementById('xp-counter');
+def check_even_odd(num):
+    # Your code here
+    pass
 
-  function appendCodyMessage(msg, origin) {
-    const bubble = document.createElement('div');
-    bubble.className = `chat-msg ${origin}`;
-    bubble.innerHTML = msg;
-    chatContainer.appendChild(bubble);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-  }
+# Test your function
+print(check_even_odd(4))
+print(check_even_odd(7))`,
+      hint: 'A number is even if num % 2 == 0. Otherwise, it\'s odd. Use an if/else statement.',
+      solution_check: (code) => code.includes('def check_even_odd') && code.includes('if') && code.includes('%')
+    },
+    3: {
+      name: 'Sum Numbers',
+      filename: 'challenge_3.py',
+      starter: `# Challenge 3: Sum Numbers
+# Write a function that returns the sum of all numbers from 1 to n
 
-  const codyBlueprints = {
-    fizzbuzz: `<strong>Cody:</strong> To solve Challenge 1, you need to define a function called <code>fizzbuzz(num)</code>. Inside it, check if <code>num % 3 == 0</code> using an <code>if</code> condition. If it is, use <code>print("Fizz")</code>. Type that into your editor area panel right now and hit test!`,
-    discord: `<strong>Cody:</strong> For the Discord integration logic challenge, create an async event function hook string named <code>on_message(message)</code>. Use an inner evaluation layer statement checking if <code>message.content == "!status"</code>, then write an asynchronous await tracking call expression.`
+def sum_numbers(n):
+    # Your code here
+    pass
+
+# Test your function
+print(sum_numbers(5))  # Should print 15
+print(sum_numbers(10)) # Should print 55`,
+      hint: 'You can use a loop to add numbers together, or use the formula: sum = n * (n + 1) / 2',
+      solution_check: (code) => code.includes('def sum_numbers')
+    }
   };
 
-  function askCodyHelp(key) {
-    appendCodyMessage(`I am stuck on the structural blueprint path for ${key}. Explain the steps.`, 'user');
-    setTimeout(() => {
-      appendCodyMessage(codyBlueprints[key] || "Analyze variable parameters, build logical structures inside functions, then invoke execution handlers.", 'cody');
-    }, 250);
-  }
+  let currentChallenge = 1;
+  let playerXP = 0;
 
-  function freeformCodyChat() {
-    const inputField = document.getElementById('cody-chat-input');
-    const userQuery = inputField.value.trim();
-    if(!userQuery) return;
-
-    appendCodyMessage(userQuery, 'user');
-    inputField.value = "";
-
-    setTimeout(() => {
-      let coachFeedback = "<strong>Cody:</strong> Interesting strategy prompt input. Remember to isolate logic processes inside dedicated execution blocks, leverage native assignment parameters (=), and check code structure integrity before compiling.";
-      
-      if(userQuery.toLowerCase().includes("how") || userQuery.toLowerCase().includes("stuck")) {
-        coachFeedback = "<strong>Cody:</strong> Do not panic! Look closely at your variables mapping. Break down your loop into safe parts, isolate evaluation operators, and use native statements like <code>print()</code> to expose memory states inside the terminal frame.";
-      }
-      appendCodyMessage(coachFeedback, 'cody');
-    }, 350);
-  }
-
-  function loadChallengeWorkspace(challengeId) {
-    activeChallengeId = challengeId;
-    if(challengeId === 1) {
-      filenameLabel.textContent = "challenge_one.py";
-      challengeIndicator.textContent = "Current Active Target: Challenge 1";
-      codeEditor.value = `# Challenge 1: Write a function named 'fizzbuzz'\n# that prints "Fizz" if divisible by 3.\ndef fizzbuzz(num):\n    # Write logic statement here.`;
-      consoleTerminal.innerHTML = `<span class="system-msg">[System Workspace Configured]: Mounted Chapter 1 standard verification template code.</span>`;
-    } else if(challengeId === 7) {
-      filenameLabel.textContent = "async_discord_handler.py";
-      challengeIndicator.textContent = "Current Active Target: Challenge 2";
-      codeEditor.value = `# Challenge 2: Implement an asynchronous network event function\n# named 'on_message' tracking live client server token signals.\nasync def on_message(message):\n    # Code your async checks here`;
-      consoleTerminal.innerHTML = `<span class="system-msg">[System Workspace Configured]: Mounted Chapter 7 advanced Discord asynchronous verification matrix framework.</span>`;
-    }
-    document.getElementById('editor-anchor').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function compileAndTestCode() {
-    const standardUserCodeString = codeEditor.value;
-    consoleTerminal.innerHTML = `<span style="color:var(--moss-bright);">>>> Spawning sandbox tracking engine harness validation loops...</span><br>`;
+  // LOAD CHALLENGE
+  function loadChallenge(id) {
+    currentChallenge = id;
+    const challenge = challenges[id];
     
+    document.getElementById('code-editor').value = challenge.starter;
+    document.getElementById('filename').textContent = challenge.filename;
+    document.getElementById('output-console').innerHTML = '';
+
+    // Update button styles
+    document.querySelectorAll('.challenge-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Clear chat
+    const chatBox = document.getElementById('cody-chat');
+    chatBox.innerHTML = `<div class="chat-bubble cody"><strong>Cody:</strong> Let's tackle Challenge ${id}: ${challenge.name}! ${challenge.hint}</div>`;
+  }
+
+  // RUN CODE
+  function runCode() {
+    const code = document.getElementById('code-editor').value;
+    const outputBox = document.getElementById('output-console');
+    const challenge = challenges[currentChallenge];
+
+    outputBox.innerHTML = '<span class="output-success">Running code...</span>';
+
+    // Simple simulation of code execution
     setTimeout(() => {
-      if(activeChallengeId === 1) {
-        if(standardUserCodeString.includes("def fizzbuzz") && standardUserCodeString.includes("print") && (standardUserCodeString.includes("%") || standardUserCodeString.includes("3"))) {
-          playerXP += 150;
-          xpCounterElement.textContent = playerXP;
-          consoleTerminal.innerHTML += `<div style="color:var(--moss-bright); font-weight:bold; padding-top:4px;">🎉 CHALLENGE 1 SUCCESSION PASSED (+150 XP)</div>`;
-          consoleTerminal.innerHTML += `<div style="color:#cfe8c9;">Terminal Output Log: 'Fizz' criteria conditions satisfied across runtime arrays.</div>`;
-          appendCodyMessage("<strong>Cody:</strong> Phenomenal tracking job! Your structural design loops validated perfectly on the matrix parser.", 'cody');
-        } else {
-          consoleTerminal.innerHTML += `<div style="color:#e0654c; font-weight:bold; padding-top:4px;">❌ VERIFICATION ENGINE COMPILATION FAILURE</div>`;
-          consoleTerminal.innerHTML += `<div style="color:#a9c7a3;">Error Hint: Ensure you have named the target block function 'fizzbuzz' accurately and integrated print operations. Call Cody if you need strategy.</div>`;
-        }
+      if (code.trim() === '') {
+        outputBox.innerHTML = '<span class="output-error">Error: No code to run!</span>';
+        return;
+      }
+
+      // Check if solution looks reasonable
+      if (challenge.solution_check(code)) {
+        playerXP += 50;
+        document.getElementById('xp-counter').textContent = playerXP;
+        outputBox.innerHTML = `
+          <span class="output-success">✓ Code executed successfully!</span><br>
+          <span style="color: #9CC24C;">+50 XP earned!</span><br><br>
+          <span style="color: #cfe8c9;">Your approach looks good. Keep practicing!</span>
+        `;
+        addCodyMessage('<strong>Cody:</strong> Nice work! Your logic is solid. Want to try the next challenge?', 'cody');
       } else {
-        if(standardUserCodeString.includes("async def on_message") && standardUserCodeString.includes("message")) {
-          playerXP += 300;
-          xpCounterElement.textContent = playerXP;
-          consoleTerminal.innerHTML += `<div style="color:var(--moss-bright); font-weight:bold; padding-top:4px;">🎉 CHALLENGE 2 ASYNC ROUTING SATISFIED (+300 XP)</div>`;
-          consoleTerminal.innerHTML += `<div style="color:#cfe8c9;">Gateway Client Pipeline State: Operational Authenticated Token Connection established.</div>`;
-          appendCodyMessage("<strong>Cody:</strong> Incredible execution pattern! You mapped an asynchronous loop safely.", 'cody');
-        } else {
-          consoleTerminal.innerHTML += `<div style="color:#e0654c; font-weight:bold; padding-top:4px;">❌ ASYNC TIMEOUT SIGNAL MISMATCH ERROR</div>`;
-          consoleTerminal.innerHTML += `<div style="color:#a9c7a3;">Error Hint: Make sure the function signature reads 'async def on_message(message):'.</div>`;
-        }
+        outputBox.innerHTML = `
+          <span class="output-error">Hmm, let's review your approach.</span><br>
+          <span style="color: #a9c7a3;">${challenge.hint}</span>
+        `;
+        addCodyMessage(`<strong>Cody:</strong> I see you're working on it! Here's a hint: ${challenge.hint}`, 'cody');
       }
-    }, 600);
+    }, 500);
   }
 
-  // MODAL GATEWAY CONTROLLER
-  const backdrop = document.getElementById('checkout-gateway-modal');
-  const titleField = document.getElementById('modal-tier-title');
-  const currentSpinner = document.getElementById('payment-spinner');
-  const successNotice = document.getElementById('payment-success-msg');
-  const payBtn = document.getElementById('pay-submit-btn');
-
-  function launchCheckoutWindow(tierName) {
-    titleField.textContent = `Checkout Form — ${tierName}`;
-    successNotice.style.display = "none";
-    currentSpinner.style.display = "none";
-    payBtn.style.display = "inline-block";
-    backdrop.classList.add('open');
+  // RESET CODE
+  function resetCode() {
+    const challenge = challenges[currentChallenge];
+    document.getElementById('code-editor').value = challenge.starter;
+    document.getElementById('output-console').innerHTML = '';
   }
 
-  function closeCheckoutWindow() {
-    backdrop.classList.remove('open');
-  }
+  // CODY RESPONSES
+  const codyResponses = {
+    challenge: "This challenge is about solving a specific programming problem. Read the instructions carefully, start with the function signature, and build your logic step by step. Don't try to solve it all at once!",
+    stuck: "Take a deep breath! Break your problem into smaller parts. What's the first step? Try writing that first, then test it. If you're still stuck, ask me about a specific part of the problem.",
+    concept: "Every challenge teaches you a programming concept. Look at the hints I give you—they point to the key concept you need to use. Try to understand WHY the concept works, not just HOW to use it."
+  };
 
-  function processSimulatedStripeCharge() {
-    payBtn.style.display = "none";
-    currentSpinner.style.display = "block";
-    
+  function askCody(type) {
+    addCodyMessage('Me: ' + Object.keys(codyResponses)[Object.keys(codyResponses).indexOf(type)], 'user');
     setTimeout(() => {
-      currentSpinner.style.display = "none";
-      successNotice.style.display = "block";
-      setTimeout(() => {
-        closeCheckoutWindow();
-      }, 1500);
-    }, 1800);
+      addCodyMessage('<strong>Cody:</strong> ' + codyResponses[type], 'cody');
+    }, 300);
   }
+
+  function sendToCody() {
+    const input = document.getElementById('cody-input');
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    addCodyMessage('You: ' + message, 'user');
+    input.value = '';
+
+    // Simulate Cody's response
+    const responses = [
+      "Great question! Let me help you think through this. What part are you working on right now?",
+      "That's a smart observation! Try experimenting with that idea in your code and see what happens.",
+      "You're on the right track! Remember, every problem can be broken down into smaller steps.",
+      "Interesting approach! Have you considered using a loop or a conditional statement?",
+      "Don't give up! The best way to learn is to try different solutions and see what works."
+    ];
+
+    setTimeout(() => {
+      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+      addCodyMessage('<strong>Cody:</strong> ' + randomResponse, 'cody');
+    }, 400);
+  }
+
+  function addCodyMessage(msg, type) {
+    const chatBox = document.getElementById('cody-chat');
+    const bubble = document.createElement('div');
+    bubble.className = `chat-bubble ${type}`;
+    bubble.innerHTML = msg;
+    chatBox.appendChild(bubble);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  // Initialize with first challenge
+  loadChallenge(1);
 </script>
 
 </body>
